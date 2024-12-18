@@ -9,6 +9,7 @@ app.use(express.static('public'));
 const convertTemperature = (value, fromUnit, toUnit) => {
   let tempInCelsius;
 
+  
   // Convert to Celsius based on the input unit
   switch (fromUnit) {
     case 'Celsius':
