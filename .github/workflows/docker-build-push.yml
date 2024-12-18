@@ -24,12 +24,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Talisman checks
+      - name: Download and Install Talisman
         run: |
-          curl -L https://github.com/thoughtworks/talisman/releases/download/v1.29.0/talisman.zip -o talisman.zip
-          unzip talisman.zip -d talisman
-          chmod +x talisman/talisman
-          ./talisman/talisman --scan-all
+          curl -L https://thoughtworks.github.io/talisman/install.sh | bash
+          chmod +x talisman
+
+      - name: Run Talisman Check
+        run: ./talisman --scan-all
 
   # Job 2: Run NPM tests
   npm-test:
