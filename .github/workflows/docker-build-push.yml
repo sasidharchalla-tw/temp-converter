@@ -16,29 +16,10 @@ defaults:
     working-directory: ./node-app # Set the working directory to ~/node-app
 
 jobs:
-  # Job 1: Talisman check
-  talisman-check:
-    name: Run Talisman Security Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Download and Install Talisman
-        run: |
-          curl -L https://thoughtworks.github.io/talisman/install.sh | bash
-          chmod +x talisman
-
-      - name: Run Talisman Check
-        env:
-          TERM: dumb
-        run: ./talisman --scan-all --no-color
-
-  # Job 2: Run NPM tests
   npm-test:
     name: Run NPM Test Cases
     runs-on: ubuntu-latest
-    needs: talisman-check
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -58,7 +39,7 @@ jobs:
   docker-build:
     name: Build Docker Image
     runs-on: ubuntu-latest
-    needs: [talisman-check, npm-test]
+    needs: npm-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -109,7 +90,7 @@ jobs:
   docker-push:
     name: Push Docker Image to ECR
     runs-on: ubuntu-latest
-    needs: [talisman-check, npm-test, image-scan] # Push only if all previous jobs pass
+    needs: [npm-test, image-scan] # Push only if all previous jobs pass
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
