@@ -30,7 +30,9 @@ jobs:
           chmod +x talisman
 
       - name: Run Talisman Check
-        run: ./talisman --scan-all
+        env:
+          TERM: dumb
+        run: ./talisman --scan-all --no-color
 
   # Job 2: Run NPM tests
   npm-test:
