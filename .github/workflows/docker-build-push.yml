@@ -3,7 +3,7 @@ name: Build, Test, Scan, and Push Docker Image to ECR
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - 'node-app/**' # Run the action only if changes are in the ~/node-app folder
 
