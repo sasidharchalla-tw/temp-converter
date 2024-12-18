@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'node-app/**'      
 
 env:
   REPO_NAME: temp-converter
